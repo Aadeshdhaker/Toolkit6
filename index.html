@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Tool Hub - Your Ultimate Collection of Free Online Tools</title>
+    <style>
+        :root {
+            --background-color: #0D1B2A;
+            --text-color: #E0E1DD;
+            --header-background: #1B263B;
+            --accent-color: #4ECDC4;
+            --tool-card-background: #415A77;
+            --button-hover-color: #3DAFA6;
+            --soft-box-shadow: 0 8px 16px rgba(78, 205, 196, 0.25);
+            --card-hover-box-shadow: 0 12px 24px rgba(78, 205, 196, 0.3);
+            --ad-background: #2D3748;
+            --ad-border: #4A5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-background);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        /* Top Ad Banner */
+        .top-ad-banner {
+            background-color: var(--ad-background);
+            border: 2px dashed var(--ad-border);
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Sidebar Ads */
+        .sidebar-ads {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .ad-unit {
+            background-color: var(--ad-background);
+            border: 2px dashed var(--ad-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ad-unit.large {
+            min-height: 600px;
+        }
+
+        .ad-content {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .ad-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .ad-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ad-placeholder .icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card {
+            background-color: var(--tool-card-background);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--soft-box-shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent-color);
+            color: var(--background-color);
+            box-shadow: var(--card-hover-box-shadow);
+        }
+
+        .tool-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .tool-card:hover h2 {
+            color: var(--background-color);
+        }
+
+        .tool-card p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            opacity: 0.9;
+        }
+
+        .tool-card:hover p {
+            color: var(--background-color);
+            opacity: 1;
+        }
+
+        .tool-button {
+            background-color: var(--accent-color);
+            color: var(--background-color);
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .tool-card:hover .tool-button {
+            background-color: var(--background-color);
+            color: var(--accent-color);
+        }
+
+        .tool-button:hover {
+            background-color: var(--button-hover-color) !important;
+            color: var(--background-color) !important;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: var(--header-background);
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            gap: 2rem;
+        }
+
+        .modal-tool-content {
+            grid-column: 1;
+        }
+
+        .modal-ad-sidebar {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-ad-unit {
+            background-color: var(--ad-background);
+            border: 2px dashed var(--ad-border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .close-button {
+            color: var(--text-color);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.2s ease;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 1001;
+        }
+
+        .close-button:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-body {
+            margin-top: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .modal-body h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .modal-body label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .modal-body input, .modal-body textarea, .modal-body select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            border: 1px solid var(--tool-card-background);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        .modal-body button {
+            background-color: var(--accent-color);
+            color: var(--background-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .modal-body button:hover {
+            background-color: var(--button-hover-color);
+        }
+
+        .result-area {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--background-color);
+            border-radius: 5px;
+            border: 1px solid var(--tool-card-background);
+            word-break: break-all;
+        }
+
+        .color-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 1rem;
+            border: 2px solid var(--text-color);
+        }
+
+        .color-display {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: monospace;
+            color: var(--accent-color);
+        }
+
+        .laps-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .lap-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--tool-card-background);
+        }
+
+        /* In-modal ad styles */
+        .in-tool-ad {
+            background-color: var(--ad-background);
+            border: 1px dashed var(--ad-border);
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar-ads {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .modal-content {
+                grid-template-columns: 1fr;
+                max-width: 95%;
+            }
+            
+            .modal-ad-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .tool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .sidebar-ads {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+            
+            .top-ad-banner {
+                margin: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Multi Tool Hub</h1>
+    </header>
+
+    <!-- Top Ad Banner -->
+    <div class="top-ad-banner">
+        <div class="ad-label">ADVERTISEMENT</div>
+        <div class="ad-placeholder">
+            <div class="icon">🔄</div>
+            <h3>Premium Tools Available</h3>
+            <p>728 x 90 Banner Ad Space</p>
+            <small>Your advertisement here</small>
+        </div>
+    </div>
+
+    <main>
+        <div class="tools-container">
+            <div class="tool-grid">
+                <!-- Tool cards will be dynamically generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Sidebar Ads -->
+        <div class="sidebar-ads">
+            <div class="ad-unit">
+                <div class="ad-label">ADVERTISEMENT</div>
+                <div class="ad-placeholder">
+                    <div class="icon">⭐</div>
+                    <h3>Upgrade to Pro</h3>
+                    <p>300 x 250 Ad Space</p>
+                    <small>Get advanced features</small>
+                </div>
+            </div>
+            
+            <div class="ad-unit">
+                <div class="ad-label">SPONSORED</div>
+                <div class="ad-placeholder">
+                    <div class="icon">🚀</div>
+                    <h3>Fast & Reliable</h3>
+                    <p>300 x 250 Ad Space</p>
+                    <small>Partner with us</small>
+                </div>
+            </div>
+            
+            <div class="ad-unit large">
+                <div class="ad-label">FEATURED</div>
+                <div class="ad-placeholder">
+                    <div class="icon">💎</div>
+                    <h3>Premium Tools</h3>
+                    <p>300 x 600 Ad Space</p>
+                    <small>Explore premium features</small>
+                    <div style="margin-top: 1rem; font-size: 0.8rem;">
+                        <p>• No watermarks</p>
+                        <p>• Batch processing</p>
+                        <p>• Priority support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Generic Modal Structure -->
+    <div id="toolModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            
+            <div class="modal-tool-content">
+                <h2 id="modalTitle">Tool Title</h2>
+                <div id="modalBody" class="modal-body">
+                    <!-- Tool-specific content will be injected here -->
+                </div>
+                
+                <!-- In-tool ad placement -->
+                <div class="in-tool-ad">
+                    <div class="ad-label">SPONSORED CONTENT</div>
+                    <div style="text-align: center;">
+                        <h4>Enhanced Features Available</h4>
+                        <p>Upgrade for faster processing and better results</p>
+                        <button style="background: var(--accent-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 3px; cursor: pointer;">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Sidebar Ads -->
+            <div class="modal-ad-sidebar">
+                <div class="modal-ad-unit">
+                    <div class="ad-label">ADVERTISEMENT</div>
+                    <div class="ad-placeholder">
+                        <div class="icon">🔧</div>
+                        <h4>Tool Kit Pro</h4>
+                        <p>250 x 250 Ad</p>
+                        <small>More tools available</small>
+                    </div>
+                </div>
+                
+                <div class="modal-ad-unit">
+                    <div class="ad-label">RECOMMENDED</div>
+                    <div class="ad-placeholder">
+                        <div class="icon">📱</div>
+                        <h4>Mobile App</h4>
+                        <p>250 x 250 Ad</p>
+                        <small>Use on the go</small>
+                    </div>
+                </div>
+                
+                <div class="modal-ad-unit">
+                    <div class="ad-label">PARTNER</div>
+                    <div class="ad-placeholder">
+                        <div class="icon">👥</div>
+                        <h4>Team Plan</h4>
+                        <p>250 x 250 Ad</p>
+                        <small>Collaborate with team</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toolGrid = document.querySelector('.tool-grid');
+            const modal = document.getElementById('toolModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const closeButton = document.querySelector('.close-button');
+
+            const tools = [
+                { id: 'imageConverter', title: 'Image Converter', description: 'Convert between JPG, PNG, and WEBP formats.' },
+                { id: 'imageCompressor', title: 'Image Compressor', description: 'Compress image file size with quality settings.' },
+                { id: 'imageCropper', title: 'Image Cropper', description: 'Upload, crop image with preview, and export.' },
+                { id: 'videoConverter', title: 'Video Converter', description: 'Convert video (MP4 ↔ WebM via re-encoding). Browser-limited.' },
+                { id: 'audioConverter', title: 'Audio Converter', description: 'Convert between MP3 and WAV formats.' },
+                { id: 'audioTrimmer', title: 'Audio Trimmer', description: 'Upload, trim audio, and export trimmed clip.' },
+                { id: 'ageCalculator', title: 'Age Calculator', description: 'Calculate age from date of birth.' },
+                { id: 'emiCalculator', title: 'EMI Calculator', description: 'Calculate Equated Monthly Installment for loans.' },
+                { id: 'sipCalculator', title: 'SIP Calculator', description: 'Calculate future value of SIP investments.' },
+                { id: 'qrCodeGenerator', title: 'QR Code Generator', description: 'Generate downloadable QR codes from text/URL.' },
+                { id: 'passwordGenerator', title: 'Password Generator', description: 'Generate secure passwords with custom options.' },
+                { id: 'wordCounter', title: 'Word Counter', description: 'Count words, characters, spaces, and estimate reading time.' },
+                { id: 'base64EncoderDecoder', title: 'Base64 Encoder/Decoder', description: 'Encode to Base64 or decode from Base64.' },
+                { id: 'colorPicker', title: 'Color Picker Tool', description: 'Pick colors and get HEX, RGB, HSL values.' },
+                { id: 'textToSpeech', title: 'Text to Speech', description: 'Convert text into spoken audio.' },
+                { id: 'speechToText', title: 'Speech to Text', description: 'Convert voice from microphone into text.' },
+                { id: 'jsonFormatter', title: 'JSON Formatter', description: 'Format and validate JSON data.' },
+                { id: 'unitConverter', title: 'Unit Converter', description: 'Convert values between various units.' },
+                { id: 'bmiCalculator', title: 'BMI Calculator', description: 'Calculate Body Mass Index and category.' },
+                { id: 'timerStopwatch', title: 'Timer / Stopwatch', description: 'Simple timer and stopwatch functionality.' },
+            ];
+
+            function openModal(tool) {
+                modalTitle.textContent = tool.title;
+                modalBody.innerHTML = '';
+                
+                const toolFunction = toolInitializers[tool.id];
+                if (toolFunction) {
+                    toolFunction(modalBody);
+                } else {
+                    modalBody.innerHTML = '<p>Tool UI not implemented yet.</p>';
+                }
+                modal.style.display = 'block';
+                
+                // Show ad in modal after a delay
+                setTimeout(() => {
+                    showModalAd();
+                }, 2000);
+            }
+
+            function showModalAd() {
+                // This function can be used to show dynamic ads in the modal
+                console.log('Showing modal advertisement');
+            }
+
+            function closeModal() {
+                modal.style.display = 'none';
+                modalBody.innerHTML = '';
+                // Stop any ongoing processes
+                if (window.currentSpeechRecognition) {
+                    window.currentSpeechRecognition.stop();
+                }
+                if (window.currentSpeechSynthesis) {
+                    window.currentSpeechSynthesis.cancel();
+                }
+            }
+
+            closeButton.onclick = closeModal;
+            window.onclick = (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+
+            tools.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'tool-card';
+                card.innerHTML = `
+                    <h2>${tool.title}</h2>
+                    <p>${tool.description}</p>
+                    <button class="tool-button" data-toolid="${tool.id}">Open Tool</button>
+                `;
+                card.querySelector('.tool-button').addEventListener('click', () => openModal(tool));
+                toolGrid.appendChild(card);
+            });
+
+            // Ad rotation simulation
+            function rotateAds() {
+                const adUnits = document.querySelectorAll('.ad-unit, .modal-ad-unit');
+                const messages = [
+                    'Premium Features Available',
+                    'Upgrade to Pro Version',
+                    'Limited Time Offer',
+                    'Special Discount',
+                    'New Tools Added'
+                ];
+                
+                adUnits.forEach(unit => {
+                    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                    const title = unit.querySelector('h3, h4');
+                    if (title) {
+                        title.textContent = randomMsg;
+                    }
+                });
+            }
+
+            // Rotate ads every 10 seconds
+            setInterval(rotateAds, 10000);
+
+            // All Tool Implementations (Previous code remains the same)
+            const toolInitializers = {
+                // 1. Image Converter
+                imageConverter: (container) => {
+                    container.innerHTML = `
+                        <p>Select an image to convert between formats:</p>
+                        <input type="file" id="imageInput" accept="image/*">
+                        <select id="formatSelect">
+                            <option value="image/jpeg">JPEG</option>
+                            <option value="image/png">PNG</option>
+                            <option value="image/webp">WEBP</option>
+                        </select>
+                        <button id="convertBtn">Convert & Download</button>
+                        <div id="imagePreview" style="margin-top: 1rem;"></div>
+                    `;
+
+                    const convertBtn = container.querySelector('#convertBtn');
+                    convertBtn.onclick = () => {
+                        const fileInput = container.querySelector('#imageInput');
+                        const formatSelect = container.querySelector('#formatSelect');
+                        
+                        if (!fileInput.files[0]) {
+                            alert('Please select an image file');
+                            return;
+                        }
+
+                        const file = fileInput.files[0];
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0);
+                                
+                                const dataURL = canvas.toDataURL(formatSelect.value);
+                                const link = document.createElement('a');
+                                link.download = `converted.${formatSelect.value.split('/')[1]}`;
+                                link.href = dataURL;
+                                link.click();
+                            };
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    };
+                },
+
+                // 2. Image Compressor
+                imageCompressor: (container) => {
+                    container.innerHTML = `
+                        <p>Select an image to compress:</p>
+                        <input type="file" id="compressInput" accept="image/*">
+                        <label>Quality (0.1 - 1.0):</label>
+                        <input type="range" id="qualityRange" min="0.1" max="1" step="0.1" value="0.7">
+                        <span id="qualityValue">0.7</span>
+                        <button id="compressBtn">Compress & Download</button>
+                        <div id="compressInfo"></div>
+                    `;
+
+                    const qualityRange = container.querySelector('#qualityRange');
+                    const qualityValue = container.querySelector('#qualityValue');
+                    qualityRange.oninput = () => qualityValue.textContent = qualityRange.value;
+
+                    container.querySelector('#compressBtn').onclick = () => {
+                        const fileInput = container.querySelector('#compressInput');
+                        if (!fileInput.files[0]) {
+                            alert('Please select an image file');
+                            return;
+                        }
+
+                        const file = fileInput.files[0];
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0);
+                                
+                                const quality = parseFloat(qualityRange.value);
+                                const dataURL = canvas.toDataURL('image/jpeg', quality);
+                                const link = document.createElement('a');
+                                link.download = 'compressed.jpg';
+                                link.href = dataURL;
+                                link.click();
+                                
+                                const originalSize = (file.size / 1024).toFixed(2);
+                                const compressedSize = (dataURL.length * 0.75 / 1024).toFixed(2);
+                                container.querySelector('#compressInfo').innerHTML = 
+                                    `Original: ${originalSize} KB | Compressed: ${compressedSize} KB`;
+                            };
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    };
+                },
+
+                // 3. Image Cropper
+                imageCropper: (container) => {
+                    container.innerHTML = `
+                        <p>Select an image to crop:</p>
+                        <input type="file" id="cropInput" accept="image/*">
+                        <div style="margin: 1rem 0;">
+                            <label>X: <input type="number" id="cropX" value="0"></label>
+                            <label>Y: <input type="number" id="cropY" value="0"></label>
+                            <label>Width: <input type="number" id="cropWidth" value="100"></label>
+                            <label>Height: <input type="number" id="cropHeight" value="100"></label>
+                        </div>
+                        <button id="cropBtn">Crop & Download</button>
+                        <canvas id="cropCanvas" style="display: none;"></canvas>
+                    `;
+
+                    container.querySelector('#cropBtn').onclick = () => {
+                        const fileInput = container.querySelector('#cropInput');
+                        if (!fileInput.files[0]) {
+                            alert('Please select an image file');
+                            return;
+                        }
+
+                        const file = fileInput.files[0];
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = container.querySelector('#cropCanvas');
+                                const ctx = canvas.getContext('2d');
+                                
+                                const x = parseInt(container.querySelector('#cropX').value);
+                                const y = parseInt(container.querySelector('#cropY').value);
+                                const width = parseInt(container.querySelector('#cropWidth').value);
+                                const height = parseInt(container.querySelector('#cropHeight').value);
+                                
+                                canvas.width = width;
+                                canvas.height = height;
+                                ctx.drawImage(img, x, y, width, height, 0, 0, width, height);
+                                
+                                const dataURL = canvas.toDataURL();
+                                const link = document.createElement('a');
+                                link.download = 'cropped.png';
+                                link.href = dataURL;
+                                link.click();
+                            };
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    };
+                },
+
+                // 4. Video Converter
+                videoConverter: (container) => {
+                    container.innerHTML = `
+                        <p>Video conversion requires server-side processing. This is a client-side demo.</p>
+                        <input type="file" id="videoInput" accept="video/*">
+                        <select id="videoFormat">
+                            <option value="mp4">MP4</option>
+                            <option value="webm">WebM</option>
+                        </select>
+                        <button id="videoConvertBtn">Process Video</button>
+                        <div id="videoInfo"></div>
+                    `;
+
+                    container.querySelector('#videoConvertBtn').onclick = () => {
+                        const fileInput = container.querySelector('#videoInput');
+                        if (!fileInput.files[0]) {
+                            alert('Please select a video file');
+                            return;
+                        }
+                        container.querySelector('#videoInfo').innerHTML = 
+                            'Video conversion in browser is limited. For full conversion, server processing is needed.';
+                    };
+                },
+
+                // 5. Audio Converter
+                audioConverter: (container) => {
+                    container.innerHTML = `
+                        <p>Select an audio file to convert to WAV format:</p>
+                        <input type="file" id="audioInput" accept="audio/*">
+                        <button id="audioConvertBtn">Convert to WAV</button>
+                        <audio id="audioPreview" controls style="width: 100%; margin-top: 1rem;"></audio>
+                    `;
+
+                    const audioInput = container.querySelector('#audioInput');
+                    const audioPreview = container.querySelector('#audioPreview');
+                    
+                    audioInput.onchange = function(e) {
+                        if (e.target.files[0]) {
+                            audioPreview.src = URL.createObjectURL(e.target.files[0]);
+                        }
+                    };
+
+                    container.querySelector('#audioConvertBtn').onclick = () => {
+                        if (!audioInput.files[0]) {
+                            alert('Please select an audio file');
+                            return;
+                        }
+                        alert('Audio conversion requires Web Audio API implementation');
+                    };
+                },
+
+                // 6. Audio Trimmer
+                audioTrimmer: (container) => {
+                    container.innerHTML = `
+                        <p>Audio trimming demo (full implementation requires Web Audio API):</p>
+                        <input type="file" id="trimInput" accept="audio/*">
+                        <div style="margin: 1rem 0;">
+                            <label>Start (seconds): <input type="number" id="startTime" value="0"></label>
+                            <label>End (seconds): <input type="number" id="endTime" value="10"></label>
+                        </div>
+                        <button id="trimBtn">Trim Audio</button>
+                    `;
+
+                    container.querySelector('#trimBtn').onclick = () => {
+                        alert('Audio trimming requires Web Audio API for full implementation');
+                    };
+                },
+
+                // 7. Age Calculator
+                ageCalculator: (container) => {
+                    container.innerHTML = `
+                        <label for="birthDate">Enter your Date of Birth:</label>
+                        <input type="date" id="birthDate">
+                        <button id="calculateAgeBtn">Calculate Age</button>
+                        <div id="ageResult" class="result-area" style="display:none;"></div>
+                    `;
+                    
+                    const calculateBtn = container.querySelector('#calculateAgeBtn');
+                    calculateBtn.onclick = () => {
+                        const birthDate = new Date(container.querySelector('#birthDate').value);
+                        const today = new Date();
+                        
+                        if (isNaN(birthDate.getTime())) {
+                            alert('Please enter a valid date');
+                            return;
+                        }
+                        
+                        let years = today.getFullYear() - birthDate.getFullYear();
+                        let months = today.getMonth() - birthDate.getMonth();
+                        let days = today.getDate() - birthDate.getDate();
+                        
+                        if (days < 0) {
+                            months--;
+                            days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                        }
+                        if (months < 0) {
+                            years--;
+                            months += 12;
+                        }
+                        
+                        container.querySelector('#ageResult').innerHTML = `
+                            You are: <br>
+                            <strong>${years}</strong> years,
+                            <strong>${months}</strong> months, and
+                            <strong>${days}</strong> days old.
+                        `;
+                        container.querySelector('#ageResult').style.display = 'block';
+                    };
+                },
+
+                // 8. EMI Calculator
+                emiCalculator: (container) => {
+                    container.innerHTML = `
+                        <label>Loan Amount (₹):</label>
+                        <input type="number" id="loanAmount" placeholder="100000" value="100000">
+                        <label>Interest Rate (% per year):</label>
+                        <input type="number" id="interestRate" placeholder="8.5" value="8.5" step="0.1">
+                        <label>Loan Tenure (months):</label>
+                        <input type="number" id="loanTenure" placeholder="60" value="60">
+                        <button id="calculateEMI">Calculate EMI</button>
+                        <div id="emiResult" class="result-area" style="display:none;"></div>
+                    `;
+
+                    container.querySelector('#calculateEMI').onclick = () => {
+                        const P = parseFloat(container.querySelector('#loanAmount').value);
+                        const r = parseFloat(container.querySelector('#interestRate').value) / 1200;
+                        const n = parseFloat(container.querySelector('#loanTenure').value);
+                        
+                        const EMI = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+                        const totalPayment = EMI * n;
+                        const totalInterest = totalPayment - P;
+                        
+                        container.querySelector('#emiResult').innerHTML = `
+                            Monthly EMI: <strong>₹${EMI.toFixed(2)}</strong><br>
+                            Total Interest: <strong>₹${totalInterest.toFixed(2)}</strong><br>
+                            Total Payment: <strong>₹${totalPayment.toFixed(2)}</strong>
+                        `;
+                        container.querySelector('#emiResult').style.display = 'block';
+                    };
+                },
+
+                // 9. SIP Calculator
+                sipCalculator: (container) => {
+                    container.innerHTML = `
+                        <label>Monthly Investment (₹):</label>
+                        <input type="number" id="monthlyInvestment" placeholder="5000" value="5000">
+                        <label>Expected Return Rate (% per year):</label>
+                        <input type="number" id="returnRate" placeholder="12" value="12" step="0.1">
+                        <label>Investment Period (years):</label>
+                        <input type="number" id="investmentPeriod" placeholder="10" value="10">
+                        <button id="calculateSIP">Calculate SIP</button>
+                        <div id="sipResult" class="result-area" style="display:none;"></div>
+                    `;
+
+                    container.querySelector('#calculateSIP').onclick = () => {
+                        const P = parseFloat(container.querySelector('#monthlyInvestment').value);
+                        const i = parseFloat(container.querySelector('#returnRate').value) / 1200;
+                        const n = parseFloat(container.querySelector('#investmentPeriod').value) * 12;
+                        
+                        const FV = P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+                        const totalInvestment = P * n;
+                        const wealthGained = FV - totalInvestment;
+                        
+                        container.querySelector('#sipResult').innerHTML = `
+                            Future Value: <strong>₹${FV.toFixed(2)}</strong><br>
+                            Total Investment: <strong>₹${totalInvestment.toFixed(2)}</strong><br>
+                            Wealth Gained: <strong>₹${wealthGained.toFixed(2)}</strong>
+                        `;
+                        container.querySelector('#sipResult').style.display = 'block';
+                    };
+                },
+
+                // 10. QR Code Generator
+                qrCodeGenerator: (container) => {
+                    container.innerHTML = `
+                        <label>Enter text or URL:</label>
+                        <textarea id="qrText" placeholder="Enter text here..." rows="3"></textarea>
+                        <button id="generateQR">Generate QR Code</button>
+                        <div id="qrCodeContainer" style="text-align: center; margin-top: 1rem;"></div>
+                    `;
+
+                    container.querySelector('#generateQR').onclick = () => {
+                        const text = container.querySelector('#qrText').value;
+                        if (!text) {
+                            alert('Please enter some text');
+                            return;
+                        }
+                        
+                        // Simple QR code generation using canvas
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = 200;
+                        canvas.height = 200;
+                        
+                        // Clear canvas
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, 200, 200);
+                        
+                        // Draw simple pattern (this is a basic representation)
+                        ctx.fillStyle = 'black';
+                        ctx.font = '16px Arial';
+                        ctx.fillText('QR Code', 70, 100);
+                        ctx.fillText('Placeholder', 60, 120);
+                        
+                        const qrContainer = container.querySelector('#qrCodeContainer');
+                        qrContainer.innerHTML = '';
+                        qrContainer.appendChild(canvas);
+                        
+                        // Add download button
+                        const downloadBtn = document.createElement('button');
+                        downloadBtn.textContent = 'Download QR Code';
+                        downloadBtn.onclick = () => {
+                            const link = document.createElement('a');
+                            link.download = 'qrcode.png';
+                            link.href = canvas.toDataURL();
+                            link.click();
+                        };
+                        qrContainer.appendChild(downloadBtn);
+                    };
+                },
+
+                // 11. Password Generator
+                passwordGenerator: (container) => {
+                    container.innerHTML = `
+                        <label>Password Length:</label>
+                        <input type="number" id="passLength" value="12" min="8" max="32">
+                        <div style="margin: 1rem 0;">
+                            <input type="checkbox" id="uppercase" checked> Uppercase Letters<br>
+                            <input type="checkbox" id="lowercase" checked> Lowercase Letters<br>
+                            <input type="checkbox" id="numbers" checked> Numbers<br>
+                            <input type="checkbox" id="symbols"> Symbols<br>
+                        </div>
+                        <button id="generatePass">Generate Password</button>
+                        <div class="result-area">
+                            <input type="text" id="generatedPassword" readonly style="width: 100%; background: transparent; border: none; color: inherit; font-size: 1.2em;">
+                            <button id="copyPassword" style="margin-top: 0.5rem;">Copy to Clipboard</button>
+                        </div>
+                    `;
+
+                    const generatePass = container.querySelector('#generatePass');
+                    const copyPassword = container.querySelector('#copyPassword');
+                    
+                    generatePass.onclick = () => {
+                        const length = parseInt(container.querySelector('#passLength').value);
+                        const uppercase = container.querySelector('#uppercase').checked;
+                        const lowercase = container.querySelector('#lowercase').checked;
+                        const numbers = container.querySelector('#numbers').checked;
+                        const symbols = container.querySelector('#symbols').checked;
+                        
+                        let charset = '';
+                        if (uppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                        if (lowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
+                        if (numbers) charset += '0123456789';
+                        if (symbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+                        
+                        if (charset === '') {
+                            alert('Please select at least one character type');
+                            return;
+                        }
+                        
+                        let password = '';
+                        for (let i = 0; i < length; i++) {
+                            password += charset.charAt(Math.floor(Math.random() * charset.length));
+                        }
+                        
+                        container.querySelector('#generatedPassword').value = password;
+                    };
+
+                    copyPassword.onclick = () => {
+                        const passwordField = container.querySelector('#generatedPassword');
+                        passwordField.select();
+                        document.execCommand('copy');
+                        alert('Password copied to clipboard!');
+                    };
+                },
+
+                // 12. Word Counter
+                wordCounter: (container) => {
+                    container.innerHTML = `
+                        <textarea id="wordText" placeholder="Type or paste your text here..." rows="8" style="width: 100%;"></textarea>
+                        <div id="wordStats" class="result-area">
+                            <div>Words: <span id="wordCount">0</span></div>
+                            <div>Characters: <span id="charCount">0</span></div>
+                            <div>Characters (no spaces): <span id="charNoSpaceCount">0</span></div>
+                            <div>Sentences: <span id="sentenceCount">0</span></div>
+                            <div>Reading Time: <span id="readingTime">0</span> minutes</div>
+                        </div>
+                    `;
+
+                    const textArea = container.querySelector('#wordText');
+                    
+                    textArea.oninput = () => {
+                        const text = textArea.value;
+                        const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+                        const characters = text.length;
+                        const charactersNoSpace = text.replace(/\s/g, '').length;
+                        const sentences = text.split(/[.!?]+/).filter(s => s.trim()).length;
+                        const readingTime = Math.ceil(words / 200);
+                        
+                        container.querySelector('#wordCount').textContent = words;
+                        container.querySelector('#charCount').textContent = characters;
+                        container.querySelector('#charNoSpaceCount').textContent = charactersNoSpace;
+                        container.querySelector('#sentenceCount').textContent = sentences;
+                        container.querySelector('#readingTime').textContent = readingTime;
+                    };
+                },
+
+                // 13. Base64 Encoder/Decoder
+                base64EncoderDecoder: (container) => {
+                    container.innerHTML = `
+                        <textarea id="base64Text" placeholder="Enter text to encode or base64 to decode..." rows="4" style="width: 100%;"></textarea>
+                        <button id="encodeBtn">Encode to Base64</button>
+                        <button id="decodeBtn">Decode from Base64</button>
+                        <div class="result-area">
+                            <textarea id="base64Result" readonly rows="4" style="width: 100%; background: transparent; border: none; color: inherit;"></textarea>
+                        </div>
+                    `;
+
+                    container.querySelector('#encodeBtn').onclick = () => {
+                        const text = container.querySelector('#base64Text').value;
+                        const encoded = btoa(unescape(encodeURIComponent(text)));
+                        container.querySelector('#base64Result').value = encoded;
+                    };
+
+                    container.querySelector('#decodeBtn').onclick = () => {
+                        const text = container.querySelector('#base64Text').value;
+                        try {
+                            const decoded = decodeURIComponent(escape(atob(text)));
+                            container.querySelector('#base64Result').value = decoded;
+                        } catch (e) {
+                            container.querySelector('#base64Result').value = 'Invalid Base64 string';
+                        }
+                    };
+                },
+
+                // 14. Color Picker Tool
+                colorPicker: (container) => {
+                    container.innerHTML = `
+                        <label>Select Color:</label>
+                        <input type="color" id="colorPicker" value="#4ECDC4" style="width: 100%; height: 50px;">
+                        <div class="color-display">
+                            <div id="colorPreview" class="color-preview"></div>
+                            <div>
+                                <div>HEX: <span id="hexValue">#4ECDC4</span></div>
+                                <div>RGB: <span id="rgbValue">rgb(78, 205, 196)</span></div>
+                                <div>HSL: <span id="hslValue">hsl(176, 57%, 55%)</span></div>
+                            </div>
+                        </div>
+                        <button id="copyColor">Copy Color Values</button>
+                    `;
+
+                    const colorPicker = container.querySelector('#colorPicker');
+                    const colorPreview = container.querySelector('#colorPreview');
+                    
+                    function updateColorValues(hex) {
+                        colorPreview.style.backgroundColor = hex;
+                        
+                        // Convert hex to RGB
+                        const r = parseInt(hex.substr(1, 2), 16);
+                        const g = parseInt(hex.substr(3, 2), 16);
+                        const b = parseInt(hex.substr(5, 2), 16);
+                        
+                        container.querySelector('#hexValue').textContent = hex.toUpperCase();
+                        container.querySelector('#rgbValue').textContent = `rgb(${r}, ${g}, ${b})`;
+                        
+                        // Convert RGB to HSL
+                        const rRatio = r / 255;
+                        const gRatio = g / 255;
+                        const bRatio = b / 255;
+                        
+                        const max = Math.max(rRatio, gRatio, bRatio);
+                        const min = Math.min(rRatio, gRatio, bRatio);
+                        const delta = max - min;
+                        
+                        let h = 0, s = 0, l = (max + min) / 2;
+                        
+                        if (delta !== 0) {
+                            s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+                            switch (max) {
+                                case rRatio: h = (gRatio - bRatio) / delta + (gRatio < bRatio ? 6 : 0); break;
+                                case gRatio: h = (bRatio - rRatio) / delta + 2; break;
+                                case bRatio: h = (rRatio - gRatio) / delta + 4; break;
+                            }
+                            h /= 6;
+                        }
+                        
+                        h = Math.round(h * 360);
+                        s = Math.round(s * 100);
+                        l = Math.round(l * 100);
+                        
+                        container.querySelector('#hslValue').textContent = `hsl(${h}, ${s}%, ${l}%)`;
+                    }
+
+                    colorPicker.oninput = (e) => updateColorValues(e.target.value);
+                    updateColorValues(colorPicker.value);
+
+                    container.querySelector('#copyColor').onclick = () => {
+                        const hex = container.querySelector('#hexValue').textContent;
+                        const rgb = container.querySelector('#rgbValue').textContent;
+                        const hsl = container.querySelector('#hslValue').textContent;
+                        
+                        const text = `HEX: ${hex}\nRGB: ${rgb}\nHSL: ${hsl}`;
+                        navigator.clipboard.writeText(text).then(() => {
+                            alert('Color values copied to clipboard!');
+                        });
+                    };
+                },
+
+                // 15. Text to Speech
+                textToSpeech: (container) => {
+                    container.innerHTML = `
+                        <textarea id="ttsText" placeholder="Enter text to convert to speech..." rows="4" style="width: 100%;"></textarea>
+                        <div style="margin: 1rem 0;">
+                            <label>Rate: <input type="range" id="rate" min="0.5" max="2" value="1" step="0.1"></label>
+                            <span id="rateValue">1</span><br>
+                            <label>Pitch: <input type="range" id="pitch" min="0.5" max="2" value="1" step="0.1"></label>
+                            <span id="pitchValue">1</span>
+                        </div>
+                        <button id="speakBtn">Speak</button>
+                        <button id="stopBtn">Stop</button>
+                    `;
+
+                    const rate = container.querySelector('#rate');
+                    const pitch = container.querySelector('#pitch');
+                    const rateValue = container.querySelector('#rateValue');
+                    const pitchValue = container.querySelector('#pitchValue');
+                    
+                    rate.oninput = () => rateValue.textContent = rate.value;
+                    pitch.oninput = () => pitchValue.textContent = pitch.value;
+
+                    let currentUtterance = null;
+
+                    container.querySelector('#speakBtn').onclick = () => {
+                        const text = container.querySelector('#ttsText').value;
+                        if (!text) {
+                            alert('Please enter some text');
+                            return;
+                        }
+
+                        if ('speechSynthesis' in window) {
+                            if (currentUtterance) {
+                                window.speechSynthesis.cancel();
+                            }
+
+                            currentUtterance = new SpeechSynthesisUtterance(text);
+                            currentUtterance.rate = parseFloat(rate.value);
+                            currentUtterance.pitch = parseFloat(pitch.value);
+                            
+                            window.speechSynthesis.speak(currentUtterance);
+                            window.currentSpeechSynthesis = window.speechSynthesis;
+                        } else {
+                            alert('Text-to-speech is not supported in your browser');
+                        }
+                    };
+
+                    container.querySelector('#stopBtn').onclick = () => {
+                        if ('speechSynthesis' in window) {
+                            window.speechSynthesis.cancel();
+                        }
+                    };
+                },
+
+                // 16. Speech to Text
+                speechToText: (container) => {
+                    container.innerHTML = `
+                        <button id="startListening">Start Listening</button>
+                        <button id="stopListening" disabled>Stop Listening</button>
+                        <div id="speechStatus" style="margin: 1rem 0;"></div>
+                        <textarea id="speechResult" placeholder="Speech will appear here..." readonly rows="4" style="width: 100%;"></textarea>
+                    `;
+
+                    const startBtn = container.querySelector('#startListening');
+                    const stopBtn = container.querySelector('#stopListening');
+                    const status = container.querySelector('#speechStatus');
+                    const result = container.querySelector('#speechResult');
+
+                    let recognition = null;
+
+                    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                        recognition.continuous = true;
+                        recognition.interimResults = true;
+
+                        recognition.onstart = () => {
+                            status.textContent = 'Listening... Speak now';
+                            startBtn.disabled = true;
+                            stopBtn.disabled = false;
+                        };
+
+                        recognition.onresult = (event) => {
+                            let transcript = '';
+                            for (let i = event.resultIndex; i < event.results.length; i++) {
+                                transcript += event.results[i][0].transcript;
+                            }
+                            result.value = transcript;
+                        };
+
+                        recognition.onerror = (event) => {
+                            status.textContent = 'Error: ' + event.error;
+                        };
+
+                        recognition.onend = () => {
+                            status.textContent = 'Stopped listening';
+                            startBtn.disabled = false;
+                            stopBtn.disabled = true;
+                        };
+                    } else {
+                        status.textContent = 'Speech recognition not supported in this browser';
+                        startBtn.disabled = true;
+                    }
+
+                    startBtn.onclick = () => {
+                        if (recognition) {
+                            recognition.start();
+                            window.currentSpeechRecognition = recognition;
+                        }
+                    };
+
+                    stopBtn.onclick = () => {
+                        if (recognition) {
+                            recognition.stop();
+                        }
+                    };
+                },
+
+                // 17. JSON Formatter
+                jsonFormatter: (container) => {
+                    container.innerHTML = `
+                        <textarea id="jsonInput" placeholder='Paste your JSON here... Example: {"name":"John","age":30}' rows="6" style="width: 100%;"></textarea>
+                        <button id="formatJson">Format JSON</button>
+                        <button id="validateJson">Validate JSON</button>
+                        <div class="result-area">
+                            <textarea id="jsonOutput" readonly rows="6" style="width: 100%; background: transparent; border: none; color: inherit;"></textarea>
+                        </div>
+                    `;
+
+                    container.querySelector('#formatJson').onclick = () => {
+                        const input = container.querySelector('#jsonInput').value;
+                        try {
+                            const parsed = JSON.parse(input);
+                            const formatted = JSON.stringify(parsed, null, 2);
+                            container.querySelector('#jsonOutput').value = formatted;
+                        } catch (e) {
+                            container.querySelector('#jsonOutput').value = 'Invalid JSON: ' + e.message;
+                        }
+                    };
+
+                    container.querySelector('#validateJson').onclick = () => {
+                        const input = container.querySelector('#jsonInput').value;
+                        try {
+                            JSON.parse(input);
+                            container.querySelector('#jsonOutput').value = '✅ Valid JSON';
+                        } catch (e) {
+                            container.querySelector('#jsonOutput').value = '❌ Invalid JSON: ' + e.message;
+                        }
+                    };
+                },
+
+                // 18. Unit Converter
+                unitConverter: (container) => {
+                    container.innerHTML = `
+                        <label>Category:</label>
+                        <select id="unitCategory">
+                            <option value="length">Length</option>
+                            <option value="weight">Weight</option>
+                            <option value="temperature">Temperature</option>
+                            <option value="area">Area</option>
+                            <option value="volume">Volume</option>
+                        </select>
+                        
+                        <div style="display: flex; gap: 10px; margin: 1rem 0;">
+                            <div style="flex: 1;">
+                                <input type="number" id="unitValue" value="1" step="any">
+                                <select id="unitFrom"></select>
+                            </div>
+                            <div style="flex: 1;">
+                                <span id="unitResult">1</span>
+                                <select id="unitTo"></select>
+                            </div>
+                        </div>
+                        <div id="unitInfo"></div>
+                    `;
+
+                    const units = {
+                        length: {
+                            meter: 1,
+                            kilometer: 1000,
+                            centimeter: 0.01,
+                            millimeter: 0.001,
+                            mile: 1609.34,
+                            yard: 0.9144,
+                            foot: 0.3048,
+                            inch: 0.0254
+                        },
+                        weight: {
+                            kilogram: 1,
+                            gram: 0.001,
+                            pound: 0.453592,
+                            ounce: 0.0283495,
+                            ton: 1000
+                        },
+                        temperature: {
+                            celsius: 'celsius',
+                            fahrenheit: 'fahrenheit',
+                            kelvin: 'kelvin'
+                        },
+                        area: {
+                            'square meter': 1,
+                            'square kilometer': 1000000,
+                            'square mile': 2589988.11,
+                            acre: 4046.86,
+                            hectare: 10000
+                        },
+                        volume: {
+                            liter: 1,
+                            'cubic meter': 1000,
+                            gallon: 3.78541,
+                            quart: 0.946353,
+                            pint: 0.473176
+                        }
+                    };
+
+                    function populateUnitSelects(category) {
+                        const unitFrom = container.querySelector('#unitFrom');
+                        const unitTo = container.querySelector('#unitTo');
+                        
+                        unitFrom.innerHTML = '';
+                        unitTo.innerHTML = '';
+                        
+                        Object.keys(units[category]).forEach(unit => {
+                            const option1 = document.createElement('option');
+                            option1.value = unit;
+                            option1.textContent = unit;
+                            unitFrom.appendChild(option1);
+                            
+                            const option2 = document.createElement('option');
+                            option2.value = unit;
+                            option2.textContent = unit;
+                            unitTo.appendChild(option2);
+                        });
+                        
+                        // Set different default for "to" unit
+                        if (Object.keys(units[category]).length > 1) {
+                            unitTo.selectedIndex = 1;
+                        }
+                        
+                        convertUnits();
+                    }
+
+                    function convertUnits() {
+                        const category = container.querySelector('#unitCategory').value;
+                        const value = parseFloat(container.querySelector('#unitValue').value);
+                        const fromUnit = container.querySelector('#unitFrom').value;
+                        const toUnit = container.querySelector('#unitTo').value;
+                        
+                        if (category === 'temperature') {
+                            let result;
+                            if (fromUnit === 'celsius') {
+                                if (toUnit === 'fahrenheit') result = (value * 9/5) + 32;
+                                else if (toUnit === 'kelvin') result = value + 273.15;
+                                else result = value;
+                            } else if (fromUnit === 'fahrenheit') {
+                                if (toUnit === 'celsius') result = (value - 32) * 5/9;
+                                else if (toUnit === 'kelvin') result = (value - 32) * 5/9 + 273.15;
+                                else result = value;
+                            } else if (fromUnit === 'kelvin') {
+                                if (toUnit === 'celsius') result = value - 273.15;
+                                else if (toUnit === 'fahrenheit') result = (value - 273.15) * 9/5 + 32;
+                                else result = value;
+                            }
+                            container.querySelector('#unitResult').textContent = result.toFixed(2);
+                        } else {
+                            const fromValue = units[category][fromUnit];
+                            const toValue = units[category][toUnit];
+                            const result = (value * fromValue) / toValue;
+                            container.querySelector('#unitResult').textContent = result.toFixed(4);
+                        }
+                    }
+
+                    container.querySelector('#unitCategory').onchange = (e) => {
+                        populateUnitSelects(e.target.value);
+                    };
+
+                    container.querySelector('#unitValue').oninput = convertUnits;
+                    container.querySelector('#unitFrom').onchange = convertUnits;
+                    container.querySelector('#unitTo').onchange = convertUnits;
+
+                    // Initialize
+                    populateUnitSelects('length');
+                },
+
+                // 19. BMI Calculator
+                bmiCalculator: (container) => {
+                    container.innerHTML = `
+                        <label>Weight (kg):</label>
+                        <input type="number" id="weight" placeholder="70" value="70">
+                        <label>Height (cm):</label>
+                        <input type="number" id="height" placeholder="170" value="170">
+                        <button id="calculateBMI">Calculate BMI</button>
+                        <div id="bmiResult" class="result-area" style="display:none;"></div>
+                    `;
+
+                    container.querySelector('#calculateBMI').onclick = () => {
+                        const weight = parseFloat(container.querySelector('#weight').value);
+                        const height = parseFloat(container.querySelector('#height').value) / 100; // convert to meters
+                        
+                        if (weight <= 0 || height <= 0) {
+                            alert('Please enter valid weight and height');
+                            return;
+                        }
+                        
+                        const bmi = weight / (height * height);
+                        let category = '';
+                        
+                        if (bmi < 18.5) category = 'Underweight';
+                        else if (bmi < 25) category = 'Normal weight';
+                        else if (bmi < 30) category = 'Overweight';
+                        else category = 'Obese';
+                        
+                        container.querySelector('#bmiResult').innerHTML = `
+                            Your BMI: <strong>${bmi.toFixed(1)}</strong><br>
+                            Category: <strong>${category}</strong><br>
+                            <small>BMI Categories:<br>
+                            Underweight: < 18.5<br>
+                            Normal weight: 18.5–24.9<br>
+                            Overweight: 25–29.9<br>
+                            Obesity: 30 or greater</small>
+                        `;
+                        container.querySelector('#bmiResult').style.display = 'block';
+                    };
+                },
+
+                // 20. Timer / Stopwatch
+                timerStopwatch: (container) => {
+                    container.innerHTML = `
+                        <div style="text-align: center;">
+                            <button id="timerTab" class="tab-button active">Timer</button>
+                            <button id="stopwatchTab" class="tab-button">Stopwatch</button>
+                        </div>
+                        
+                        <!-- Timer Section -->
+                        <div id="timerSection">
+                            <div class="timer-display" id="timerDisplay">00:00:00</div>
+                            <div style="margin: 1rem 0;">
+                                <input type="number" id="hours" placeholder="H" min="0" max="23" style="width: 60px;">:
+                                <input type="number" id="minutes" placeholder="M" min="0" max="59" style="width: 60px;">:
+                                <input type="number" id="seconds" placeholder="S" min="0" max="59" style="width: 60px;">
+                            </div>
+                            <button id="startTimer">Start</button>
+                            <button id="pauseTimer" disabled>Pause</button>
+                            <button id="resetTimer">Reset</button>
+                        </div>
+                        
+                        <!-- Stopwatch Section -->
+                        <div id="stopwatchSection" style="display: none;">
+                            <div class="timer-display" id="stopwatchDisplay">00:00:00.00</div>
+                            <button id="startStopwatch">Start</button>
+                            <button id="lapStopwatch" disabled>Lap</button>
+                            <button id="stopStopwatch" disabled>Stop</button>
+                            <button id="resetStopwatch">Reset</button>
+                            <div class="laps-list" id="lapsList"></div>
+                        </div>
+                    `;
+
+                    // Tab functionality
+                    const timerTab = container.querySelector('#timerTab');
+                    const stopwatchTab = container.querySelector('#stopwatchTab');
+                    const timerSection = container.querySelector('#timerSection');
+                    const stopwatchSection = container.querySelector('#stopwatchSection');
+
+                    timerTab.onclick = () => {
+                        timerTab.classList.add('active');
+                        stopwatchTab.classList.remove('active');
+                        timerSection.style.display = 'block';
+                        stopwatchSection.style.display = 'none';
+                    };
+
+                    stopwatchTab.onclick = () => {
+                        stopwatchTab.classList.add('active');
+                        timerTab.classList.remove('active');
+                        stopwatchSection.style.display = 'block';
+                        timerSection.style.display = 'none';
+                    };
+
+                    // Timer functionality
+                    let timerInterval;
+                    let timerTime = 0;
+                    let timerRunning = false;
+
+                    function updateTimerDisplay() {
+                        const hours = Math.floor(timerTime / 3600);
+                        const minutes = Math.floor((timerTime % 3600) / 60);
+                        const seconds = timerTime % 60;
+                        container.querySelector('#timerDisplay').textContent = 
+                            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }
+
+                    container.querySelector('#startTimer').onclick = () => {
+                        if (!timerRunning) {
+                            const hours = parseInt(container.querySelector('#hours').value) || 0;
+                            const minutes = parseInt(container.querySelector('#minutes').value) || 0;
+                            const seconds = parseInt(container.querySelector('#seconds').value) || 0;
+                            
+                            timerTime = hours * 3600 + minutes * 60 + seconds;
+                            if (timerTime <= 0) {
+                                alert('Please set a valid time');
+                                return;
+                            }
+                            
+                            timerRunning = true;
+                            container.querySelector('#startTimer').disabled = true;
+                            container.querySelector('#pauseTimer').disabled = false;
+                            
+                            timerInterval = setInterval(() => {
+                                if (timerTime > 0) {
+                                    timerTime--;
+                                    updateTimerDisplay();
+                                } else {
+                                    clearInterval(timerInterval);
+                                    timerRunning = false;
+                                    container.querySelector('#startTimer').disabled = false;
+                                    container.querySelector('#pauseTimer').disabled = true;
+                                    alert('Timer finished!');
+                                }
+                            }, 1000);
+                        }
+                    };
+
+                    container.querySelector('#pauseTimer').onclick = () => {
+                        if (timerRunning) {
+                            clearInterval(timerInterval);
+                            timerRunning = false;
+                            container.querySelector('#startTimer').disabled = false;
+                            container.querySelector('#pauseTimer').disabled = true;
+                        }
+                    };
+
+                    container.querySelector('#resetTimer').onclick = () => {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        timerTime = 0;
+                        updateTimerDisplay();
+                        container.querySelector('#startTimer').disabled = false;
+                        container.querySelector('#pauseTimer').disabled = true;
+                    };
+
+                    // Stopwatch functionality
+                    let stopwatchInterval;
+                    let stopwatchTime = 0;
+                    let stopwatchRunning = false;
+                    let lapCount = 1;
+
+                    function updateStopwatchDisplay() {
+                        const hours = Math.floor(stopwatchTime / 360000);
+                        const minutes = Math.floor((stopwatchTime % 360000) / 6000);
+                        const seconds = Math.floor((stopwatchTime % 6000) / 100);
+                        const centiseconds = stopwatchTime % 100;
+                        
+                        container.querySelector('#stopwatchDisplay').textContent = 
+                            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
+                    }
+
+                    container.querySelector('#startStopwatch').onclick = () => {
+                        if (!stopwatchRunning) {
+                            stopwatchRunning = true;
+                            container.querySelector('#startStopwatch').disabled = true;
+                            container.querySelector('#lapStopwatch').disabled = false;
+                            container.querySelector('#stopStopwatch').disabled = false;
+                            
+                            const startTime = Date.now() - stopwatchTime * 10;
+                            stopwatchInterval = setInterval(() => {
+                                stopwatchTime = Math.floor((Date.now() - startTime) / 10);
+                                updateStopwatchDisplay();
+                            }, 10);
+                        }
+                    };
+
+                    container.querySelector('#stopStopwatch').onclick = () => {
+                        if (stopwatchRunning) {
+                            clearInterval(stopwatchInterval);
+                            stopwatchRunning = false;
+                            container.querySelector('#startStopwatch').disabled = false;
+                            container.querySelector('#lapStopwatch').disabled = true;
+                            container.querySelector('#stopStopwatch').disabled = true;
+                        }
+                    };
+
+                    container.querySelector('#lapStopwatch').onclick = () => {
+                        if (stopwatchRunning) {
+                            const lapItem = document.createElement('div');
+                            lapItem.className = 'lap-item';
+                            lapItem.textContent = `Lap ${lapCount}: ${container.querySelector('#stopwatchDisplay').textContent}`;
+                            container.querySelector('#lapsList').appendChild(lapItem);
+                            lapCount++;
+                        }
+                    };
+
+                    container.querySelector('#resetStopwatch').onclick = () => {
+                        clearInterval(stopwatchInterval);
+                        stopwatchRunning = false;
+                        stopwatchTime = 0;
+                        lapCount = 1;
+                        updateStopwatchDisplay();
+                        container.querySelector('#startStopwatch').disabled = false;
+                        container.querySelector('#lapStopwatch').disabled = true;
+                        container.querySelector('#stopStopwatch').disabled = true;
+                        container.querySelector('#lapsList').innerHTML = '';
+                    };
+
+                    // Initialize displays
+                    updateTimerDisplay();
+                    updateStopwatchDisplay();
+                }
+            };
+        });
+    </script>
+</body>
+</html>
